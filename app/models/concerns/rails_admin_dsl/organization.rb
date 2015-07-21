@@ -1,4 +1,5 @@
-module RailsAdminDSL::Organization extend ActiveSupport::Concern
+module RailsAdminDSL::Organization
+  extend ActiveSupport::Concern
   included do
     rails_admin do
       list do
@@ -8,16 +9,9 @@ module RailsAdminDSL::Organization extend ActiveSupport::Concern
             label label_value if label_value.present?
             column_width column_width_value if column_width_value.present?
             if formatted_value_1.present? && formatted_value_2.present?
-              formatted_value do
-                "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}"
-              end
+              formatted_value { "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}" }
             end
-            if formatted_value_3.present?
-              formatted_value do
-                addresses = bindings[:object].addresses
-                addresses[0][formatted_value_3] if addresses.present?
-              end
-            end
+            formatted_value { bindings[:object].addresses[0][formatted_value_3] if bindings[:object].addresses.present? } if formatted_value_3.present?
           end
         end
         list_config(:id, 'ID', 40, '', '', '')
