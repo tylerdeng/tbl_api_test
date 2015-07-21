@@ -34,7 +34,7 @@ module RailsAdminDSL::Organization extend ActiveSupport::Concern
           label 'State'
           column_width 100
           formatted_value do
-            "#{bindings[:object].first_name} #{bindings[:object].last_name}"
+            "1111"
           end
         end
         field :expiration_date do
