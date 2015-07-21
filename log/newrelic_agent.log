@@ -5348,3 +5348,26 @@
 [07/21/15 15:26:17 +0800 tkgz-OptiPlex-7020 (22640)] INFO : Doing deferred dependency-detection before Rack startup
 [07/21/15 15:26:17 +0800 tkgz-OptiPlex-7020 (22640)] INFO : delayed_job not available: No DJ worker present. Skipping DJ queue sampler
 [07/21/15 15:26:17 +0800 tkgz-OptiPlex-7020 (22640)] INFO : Starting Agent shutdown
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Starting the New Relic agent in "test" environment.
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "test" section of your newrelic.yml.
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] WARN : No configuration file found. Working directory = /data/web/tbl_api_test
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] WARN : Looked in these locations (based on defaults): /data/web/tbl_api_test/config/newrelic.yml, /data/web/tbl_api_test/newrelic.yml, /data/web/tbl_api_test/config/newrelic.yml, /data/web/tbl_api_test/newrelic.yml, /home/tkgz/.newrelic/newrelic.yml, /home/tkgz/newrelic.yml
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Environment: test
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : No known dispatcher detected.
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Application: test
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] WARN : No license key found. This often means your newrelic.yml file was not found, or it lacks a section for the running environment, 'test'. You may also want to try linting your newrelic.yml to ensure it is valid YML.
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Redis Instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Net instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing ActiveRecord 4 instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Rails 3+ middleware instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing DelayedJob instrumentation [part 1/2]
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing ActiveJob instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing deferred Rack instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Rack::Builder middleware instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Rails 4 Error instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Rails 4 view instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Installing Rails 4 Controller instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Finished instrumentation
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Doing deferred dependency-detection before Rack startup
+[07/21/15 15:29:40 +0800 tkgz-OptiPlex-7020 (23673)] INFO : delayed_job not available: No DJ worker present. Skipping DJ queue sampler
+[07/21/15 15:29:41 +0800 tkgz-OptiPlex-7020 (23673)] INFO : Starting Agent shutdown

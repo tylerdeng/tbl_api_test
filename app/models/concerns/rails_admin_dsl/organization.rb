@@ -1,71 +1,47 @@
 module RailsAdminDSL::Organization extend ActiveSupport::Concern
   included do
-  	rails_admin do
+    rails_admin do
       list do
         scopes [:include_addresses]
-        field :id do
-          label 'ID'
-          column_width 40
-        end
-        field :name do
-          label 'Business Name'
-          column_width 100
-        end
-        field :contact_name do
-          label 'Contact Name'
-          column_width 100
-          formatted_value do
-            "#{bindings[:object].first_name} #{bindings[:object].last_name}"
+        def list_config(field_value, label_value, column_width_value, formatted_value_1, formatted_value_2, formatted_value_3)
+          field field_value do
+            label label_value if label_value.present?
+            column_width column_width_value if column_width_value.present?
+            if formatted_value_1.present? && formatted_value_2.present?
+              formatted_value do
+                "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}"
+              end
+            end
+            if formatted_value_3.present?
+              formatted_value do
+                addresses = bindings[:object].addresses
+                addresses[0][formatted_value_3] if addresses.present?
+              end
+            end
           end
         end
-        field :type do
-          label 'Type'
-          column_width 100
-        end
-        field :city do
-          label 'City'
-          column_width 100
-          formatted_value do
-            addresses = bindings[:object].addresses
-            addresses[0].city if addresses.present?
-          end
-        end
-        field :state do
-          label 'State'
-          column_width 80
-          formatted_value do
-            addresses = bindings[:object].addresses
-            addresses[0].state if addresses.present?
-          end
-        end
-        field :expiration_date do
-          label 'Expiration Date'
-          column_width 100
-        end
-        field :activated_date do
-          label 'Last Active'
-          column_width 100
-        end
+        list_config(:id, 'ID', 40, '', '', '')
+        list_config(:name, 'Business Name', 100, '', '', '')
+        list_config(:contact_name, 'Contact Name', 100, :first_name, :last_name, '')
+        list_config(:type, 'Type', 100, '', '', '')
+        list_config(:city, 'City', 100, '', '', :city)
+        list_config(:state, 'State', 100, '', '', :state)
+        list_config(:expiration_date, 'Expiration Date', 100, '', '', '')
+        list_config(:activated_date, 'Last Active', 100, '', '', '')
       end
       edit do
-        field :id do
-          hide
+        def edit_config(field_value, label_value, hide_value, help_value)
+          field field_value do
+            label label_value if label_value.present?
+            hide if hide_value.present?
+            help false unless help_value.present?
+          end
         end
-        field :type do
-          label 'Organization Type*'
-          help false
-        end
-        field :name do
-          label 'Organization Name*'
-          help false
-        end
-        field :web_address  do
-          label 'Website'
-          help false
-        end
-        field :blog do
-          help false
-        end
+        edit_config(:id, '', 'hide', 'help')
+        edit_config(:type, 'Organization Type*', '', '')
+        edit_config(:name, 'Organization Name*', '', '')
+        edit_config(:web_address, 'Website', '', '')
+        edit_config(:blog, '', '', '')
         field :established_when, :enum do
           show
           label 'Year Established'
@@ -79,10 +55,7 @@ module RailsAdminDSL::Organization extend ActiveSupport::Concern
             year_time_stamp_array.push ['Pre-1980', (Time.parse '1970-1-1 00:00:00').to_i]
           end
         end
-        field :uuid do
-          label 'uuid*'
-          help false
-        end
+        edit_config(:uuid, 'Uuid*', '', '')
       end
       update do
         field :id do
