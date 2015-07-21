@@ -32,9 +32,10 @@ module RailsAdminDSL::Organization extend ActiveSupport::Concern
         end
         field :state do
           label 'State'
-          column_width 100
+          column_width 80
           formatted_value do
-            "1111"
+            addresses = bindings[:object].addresses
+            addresses[0].state if addresses.present?
           end
         end
         field :expiration_date do
