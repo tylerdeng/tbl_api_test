@@ -12,14 +12,12 @@ module RailsAdminDSL::Organization
         end
         def list_config_bindings_2(field_value, formatted_value_1, formatted_value_2)
           field field_value do
-            if formatted_value_1.present? && formatted_value_2.present?
-              formatted_value { "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}" }
-            end
+            formatted_value { "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}" }
           end
         end
         def list_config_bindings_1(field_value, formatted_value_1)
           field field_value do
-            formatted_value { bindings[:object].addresses[0][formatted_value_1] if bindings[:object].addresses.present? } if formatted_value_1.present?
+            formatted_value { bindings[:object].addresses[0][formatted_value_1] if bindings[:object].addresses.present? }
           end
         end
         list_config(:id, 'ID', 40)
