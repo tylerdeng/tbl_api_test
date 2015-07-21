@@ -275,7 +275,8 @@
         null
       ],
       "/data/web/tbl_api_test/app/models/concerns/rails_admin_dsl/organization.rb": [
-        2,
+        1,
+        1,
         1,
         1,
         1,
@@ -285,16 +286,9 @@
         8,
         8,
         8,
-        1,
-        7,
+        8,
         null,
-        null,
-        8,
-        2,
-        14,
-        14,
-        null,
-        null,
+        22,
         null,
         null,
         1,
@@ -432,6 +426,6 @@
         null
       ]
     },
-    "timestamp": 1437468748
+    "timestamp": 1437470317
   }
 }
