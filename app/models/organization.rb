@@ -1,3 +1,4 @@
+require 'date'
 class Organization < ActiveRecord::Base
   has_many :addresses, as: :addressable
   has_many :publications
@@ -8,7 +9,32 @@ class Organization < ActiveRecord::Base
   validates :name, presence: true
   validates :uuid, presence: true, uniqueness: true
   self.inheritance_column = :_type_disabled
-  scope :include_addresses, -> { includes(:addresses) }
+  scope :include_associations, -> { includes(:addresses, :users) }
 
   include RailsAdminDSL::Organization
+  def last_active
+    return Date.new(1970, 1, 1) unless users.present?
+    users.to_a.map(&:last_sign_in_at).sort.last
+  end
+
+  def contact_name
+    "#{first_name} #{last_name}"
+  end
+
+  def city
+    "#{addresses.first.city}" if addresses.present?
+  end
+
+  def state
+    "#{addresses.first.state}" if addresses.present?
+  end
+
+  def established_years
+    year_array = 1980..Time.now.year
+    year_time_stamp_array = []
+    year_array.reverse_each do |f|
+      year_time_stamp_array << [f, f]
+    end
+    year_time_stamp_array << ['Pre-1980', 1970]
+  end
 end

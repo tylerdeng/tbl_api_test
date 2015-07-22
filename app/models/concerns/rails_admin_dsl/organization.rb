@@ -1,65 +1,33 @@
 module RailsAdminDSL::Organization
   extend ActiveSupport::Concern
+
   included do
     rails_admin do
       list do
-        scopes [:include_addresses]
-        def list_config(field_value, label_value, column_width_value)
-          field field_value do
-            label label_value if label_value.present?
-            column_width column_width_value if column_width_value.present?
-          end
-        end
-        def list_config_bindings_2(field_value, formatted_value_1, formatted_value_2)
-          field field_value do
-            formatted_value { "#{bindings[:object][formatted_value_1]} #{bindings[:object][formatted_value_2]}" }
-          end
-        end
-        def list_config_bindings_1(field_value, formatted_value_1)
-          field field_value do
-            formatted_value { bindings[:object].addresses[0][formatted_value_1] if bindings[:object].addresses.present? }
-          end
-        end
-        list_config(:id, 'ID', 40)
-        list_config(:name, 'Business Name', 100)
-        list_config(:contact_name, 'Contact Name', 100)
-        list_config_bindings_2(:contact_name, :first_name, :last_name)
-        list_config(:type, 'Type', 100)
-        list_config(:city, 'City', 100)
-        list_config(:state, 'State', 100)
-        list_config_bindings_1(:city, :city)
-        list_config_bindings_1(:state, :state)
-        list_config(:expiration_date, 'Expiration Date', 100)
-        list_config(:activated_date, 'Last Active', 100)
+        extend  RailsAdminDSL::BaseFormatters
+        scopes [:include_associations]
+
+        string_config :id, label: 'ID', width: 40
+        string_config :name, label: 'Business Name'
+        string_config :contact_name, label: 'Contact Name'
+        string_config :type, label: 'Organization Type*'
+        string_config :city, label: 'City'
+        string_config :state, label: 'State'
+        string_config :expiration_date, label: 'Expiration Date', width: 80
+        date_config :last_active, label: 'Last  Active', width: 40
       end
       edit do
-        def edit_config(field_value, label_value, hide_value, help_value)
-          field field_value do
-            label label_value if label_value.present?
-            hide if hide_value.present?
-            help false unless help_value.present?
-          end
+        extend  RailsAdminDSL::BaseFormatters
+        field :id do
+          hide
         end
-        edit_config(:id, '', 'hide', 'help')
-        edit_config(:type, 'Organization Type*', '', '')
-        edit_config(:name, 'Organization Name*', '', '')
-        edit_config(:web_address, 'Website', '', '')
-        edit_config(:blog, '', '', '')
-        field :established_when, :enum do
-          show
-          label 'Year Established'
-          help false
-          enum do
-            year_array = 1980..Time.now.year
-            year_time_stamp_array = []
-            year_array.reverse_each do |f|
-              year_time_stamp_array.push [f, (Time.parse "#{f}-1-1 00:00:00").to_i]
-            end
-            year_time_stamp_array.push ['Pre-1980', (Time.parse '1970-1-1 00:00:00').to_i]
-          end
-        end
-        edit_config(:uuid, 'Uuid*', '', '')
-      end
+        text_field_config :type ,label: 'Organization Type'
+        text_field_config :name , label: 'Business Name'
+        text_field_config :web_address,label:  'Website'
+        text_field_config :blog, label: 'Blog'
+        enum_drop_down_config :established_when, label: 'Year Established', method: :established_years
+        text_field_config :uuid, label: 'uuid*'
+     end
       update do
         field :id do
           show
