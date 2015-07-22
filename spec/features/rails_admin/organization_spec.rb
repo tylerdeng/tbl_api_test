@@ -55,6 +55,15 @@ describe 'edit', type: :feature do
   it 'shows established_when fields' do
     expect(page).to have_content 'Year Established'
   end
+  it 'show Email Address fields' do
+    expect(page).to have_content 'Email Address'
+  end
+  it 'show First Name fields' do
+    expect(page).to have_content 'First Name'
+  end
+  it 'show Last Name fields' do
+    expect(page).to have_content 'Last Name'
+  end
   it 'show id fields read only' do
     expect(page).to have_css '#organization_id_field .form-control-static'
   end

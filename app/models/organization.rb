@@ -7,6 +7,9 @@ class Organization < ActiveRecord::Base
   has_many :users
   validates :type, presence: true
   validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, email: true
   validates :uuid, presence: true, uniqueness: true
   self.inheritance_column = :_type_disabled
   scope :include_associations, -> { includes(:addresses, :users) }
@@ -31,10 +34,7 @@ class Organization < ActiveRecord::Base
 
   def established_years
     year_array = 1980..Time.now.year
-    year_time_stamp_array = []
-    year_array.reverse_each do |f|
-      year_time_stamp_array << [f, f]
-    end
-    year_time_stamp_array << ['Pre-1980', 1970]
+    year_array = year_array.to_a.reverse
+    year_array << ['Pre-1980', 1970]
   end
 end

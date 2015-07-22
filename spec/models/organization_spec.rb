@@ -1,23 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
+  let(:organization) { FactoryGirl.build(:organization) }
   it 'has a valid factory' do
-    expect(FactoryGirl.build(:organization)).to be_valid
+    expect(organization).to be_valid
   end
   it 'has a scope include_addresses' do
     expect { Organization.include_associations }.not_to raise_error
   end
+
   describe 'validations' do
-    it { should validate_presence_of(:type) }
     it { should have_many(:addresses) }
     it { should have_many(:albums) }
     it { should have_many(:publications) }
-
     it { should have_many(:organization_albums) }
     it { should have_many(:albums) }
+
+    it { should validate_presence_of(:type) }
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:uuid) }
-    # its(:attributes) { should include("import_id") }
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should validate_presence_of(:email) }
     its(:attributes) { should include ('web_address') }
     its(:attributes) { should include ('user_status') }
     its(:attributes) { should include ('referral') }
@@ -43,19 +47,26 @@ RSpec.describe Organization, type: :model do
     its(:attributes) { should include ('bio_description') }
     its(:attributes) { should include ('google_plus_id') }
     its(:attributes) { should include ('google_plus_id') }
+    its(:attributes) { should include ('first_name') }
+    its(:attributes) { should include ('last_name') }
+    its(:attributes) { should include ('expiration_date') }
+    its(:attributes) { should include('email') }
 
     context '#established_years' do
       it 'should return an array' do
         expect(subject.established_years).to be_an(Array)
       end
-      it 'should have an array as element' do
-        expect(subject.established_years.first).to be_an(Array)
+      it 'should have an int as element expect last' do
+        expect(subject.established_years.first).to be_an(Integer)
+      end
+      it 'should have an array as last element ' do
+        expect(subject.established_years.last).to be_an(Array)
       end
       it 'should have the last value of [Pre-1980, 1970]' do
         expect(subject.established_years.last).to eq ['Pre-1980', 1970]
       end
       it 'should have the current year as its first value' do
-        expect(subject.established_years.first).to eq [Time.now.year, Time.now.year]
+        expect(subject.established_years.first).to eq Time.now.year
       end
     end
     context '#last_active' do
@@ -102,6 +113,24 @@ RSpec.describe Organization, type: :model do
       context '#state' do
         it 'should return the state of the first address' do
           expect(subject.state).to eq address.state
+        end
+      end
+    end
+    describe 'when email format is invalid' do
+      it 'should be invalid' do
+        addresses = %w(user@foo,com user_at_foo.org example.user@foo. foo@bar_baz.com foo@bar+baz.com test@test)
+        addresses.each do |invalid_address|
+          organization.email = invalid_address
+          expect(organization).not_to be_valid
+        end
+      end
+    end
+    describe 'when email format is valid' do
+      it 'should be valid' do
+        addresses = %w(user@foo.COM A_US-ER@f.b.org frst.lst@foo.jp a+b@baz.cn)
+        addresses.each do |invalid_address|
+          organization.email = invalid_address
+          expect(organization).to be_valid
         end
       end
     end

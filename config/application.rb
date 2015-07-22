@@ -37,5 +37,6 @@ module Twobrightlights_Api
       g.javascripts = false
       g.helper = false
     end
+    config.autoload_paths << Rails.root.join('lib/validator')
   end
 end
